@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+    text-align: center;
+
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: #222;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+#status {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.board {
+    position: relative;
+
+    width: 90vw;
+    height: 90vw;
+
+    max-width: 330px;
+    max-height: 330px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
+    gap: 5px;
+}
+.cell {
+    width: 100%;
+    height: 100%;
+
+    font-size: 50px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 3px solid black;
+    border-radius: 8px;
+}
+
+.cell:hover {
+    transform: scale(1.04);
+}
+
+.cell.x {
+    color: black;
+}
+
+.cell.o {
+    color: red;
+}
+
+.win-line {
+    position: absolute;
+
+    height: 7px;
+
+    background: #00ffea;
+
+    border-radius: 10px;
+
+    display: none;
+
+    transform-origin: left center;
+
+    z-index: 2;
+
+    box-shadow: 0 0 12px #00ffea;
+}
+
+#restart {
+    margin-top: 30px;
+
+    padding: 12px 25px;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: white;
+    color: black;
+
+    transition: 0.2s;
+}
+
+#restart:hover {
+    transform: scale(1.05);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    h1 {
+        font-size: 34px;
+    }
+
+    #status {
+        font-size: 18px;
+    }
+
+    .board {
+        width: 90vw;
+        height: 90vw;
+        max-width: 330px;
+        max-height: 330px;
+    }
+
+    .cell {
+        font-size: 45px;
+    }
+
+    #restart {
+        font-size: 16px;
+        padding: 11px 22px;
+    }
+}
