@@ -3,37 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 248, 235, 0.35),
+                    rgba(255, 248, 235, 0.35)
+                ),
+                url("background.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 420px;
+
+            padding: 25px 15px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+
+            font-size: 42px;
+            color: #222;
+
+            text-shadow: 2px 2px 0 white;
+        }
+
+        .subtitle {
+            margin: 0 0 20px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        #status {
+            margin-bottom: 20px;
+
+            font-size: 20px;
+            font-weight: bold;
+
+            color: #222;
+        }
+
+        .board {
+            position: relative;
+
+            width: min(90vw, 330px);
+            height: min(90vw, 330px);
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+
+            gap: 6px;
+        }
+
+        .cell {
+            width: 100%;
+            height: 100%;
+
+            border: 3px solid #222;
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.93);
+
+            font-size: clamp(45px, 15vw, 65px);
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .cell:hover {
+            transform: scale(1.03);
+            background: white;
+        }
+
+        .cell:active {
+            transform: scale(0.96);
+        }
+
+        /* X = BLACK */
+        .cell.x {
+            color: #000000;
+        }
+
+        /* O = RED */
+        .cell.o {
+            color: #e00000;
+        }
+
+        /* WINNING LINE */
+        .win-line {
+            position: absolute;
+
+            height: 7px;
+
+            background: #00bfff;
+
+            border-radius: 10px;
+
+            display: none;
+
+            transform-origin: left center;
+
+            z-index: 10;
+
+            box-shadow:
+                0 0 5px #00bfff,
+                0 0 12px #00bfff;
+        }
+
+        #restart {
+            margin-top: 25px;
+
+            padding: 13px 28px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #222;
+            color: white;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+
+            transition: transform 0.15s;
+        }
+
+        #restart:hover {
+            transform: scale(1.05);
+        }
+
+        #restart:active {
+            transform: scale(0.95);
+        }
+
+        .footer {
+            margin-top: 18px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        /* MOBILE */
+        @media (max-width: 500px) {
+
+            body {
+                min-height: 100dvh;
+            }
+
+            .game-container {
+                padding: 15px 10px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+            #status {
+                font-size: 18px;
+            }
+
+            .board {
+                width: 88vw;
+                height: 88vw;
+
+                max-width: 330px;
+                max-height: 330px;
+            }
+
+            .cell {
+                border-width: 2px;
+                border-radius: 10px;
+            }
+
+            #restart {
+                margin-top: 22px;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-    <h1>Tic Tac Toe</h1>
+    <div class="game-container">
 
-    <p id="status">Player X's Turn</p>
+        <h1>🎮 Tic Tac Toe</h1>
 
-    <div class="board">
+        <p class="subtitle">
+            The Ultimate Student Break 😎
+        </p>
 
-        <button class="cell"></button>
-        <button class="cell"></button>
-        <button class="cell"></button>
+        <p id="status">
+            Player X's Turn
+        </p>
 
-        <button class="cell"></button>
-        <button class="cell"></button>
-        <button class="cell"></button>
 
-        <button class="cell"></button>
-        <button class="cell"></button>
-        <button class="cell"></button>
+        <div class="board">
 
-        <div class="win-line" id="winLine"></div>
+            <button class="cell"></button>
+            <button class="cell"></button>
+            <button class="cell"></button>
+
+            <button class="cell"></button>
+            <button class="cell"></button>
+            <button class="cell"></button>
+
+            <button class="cell"></button>
+            <button class="cell"></button>
+            <button class="cell"></button>
+
+            <div id="winLine" class="win-line"></div>
+
+        </div>
+
+
+        <button id="restart">
+            🔄 Restart Game
+        </button>
+
+        <div class="footer">
+            Made for students who should be studying 😂
+        </div>
 
     </div>
 
-    <button id="restart">Restart Game</button>
 
-    <script src="script.js"></script>
+    <script>
+
+        const cells = document.querySelectorAll(".cell");
+
+        const status = document.getElementById("status");
+
+        const restart = document.getElementById("restart");
+
+        const winLine = document.getElementById("winLine");
+
+
+        let currentPlayer = "X";
+
+        let gameOver = false;
+
+
+        const winningPatterns = [
+
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+
+            [0, 4, 8],
+            [2, 4, 6]
+
+        ];
+
+
+        cells.forEach((cell, index) => {
+
+            cell.addEventListener("click", function () {
+
+                if (cell.textContent !== "" || gameOver) {
+                    return;
+                }
+
+
+                cell.textContent = currentPlayer;
+
+
+                if (currentPlayer === "X") {
+
+                    cell.classList.add("x");
+
+                } else {
+
+                    cell.classList.add("o");
+
+                }
+
+
+                const winningPattern = checkWinner();
+
+
+                if (winningPattern !== null) {
+
+                    status.textContent =
+                        "🎉 Player " + currentPlayer + " Wins!";
+
+                    gameOver = true;
+
+                    drawWinningLine(winningPattern);
+
+                    return;
+                }
+
+
+                if (checkDraw()) {
+
+                    status.textContent = "🤝 It's a Draw!";
+
+                    gameOver = true;
+
+                    return;
+                }
+
+
+                if (currentPlayer === "X") {
+
+                    currentPlayer = "O";
+
+                } else {
+
+                    currentPlayer = "X";
+
+                }
+
+
+                status.textContent =
+                    "Player " + currentPlayer + "'s Turn";
+
+            });
+
+        });
+
+
+        function checkWinner() {
+
+            for (let pattern of winningPatterns) {
+
+                const a = cells[pattern[0]].textContent;
+                const b = cells[pattern[1]].textContent;
+                const c = cells[pattern[2]].textContent;
+
+
+                if (
+                    a !== "" &&
+                    a === b &&
+                    b === c
+                ) {
+
+                    return pattern;
+
+                }
+
+            }
+
+
+            return null;
+        }
+
+
+        function checkDraw() {
+
+            for (let cell of cells) {
+
+                if (cell.textContent === "") {
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+        }
+
+
+        function drawWinningLine(pattern) {
+
+            const firstCell = cells[pattern[0]];
+
+            const lastCell = cells[pattern[2]];
+
+
+            const board =
+                document.querySelector(".board");
+
+
+            const boardRect =
+                board.getBoundingClientRect();
+
+
+            const firstRect =
+                firstCell.getBoundingClientRect();
+
+
+            const lastRect =
+                lastCell.getBoundingClientRect();
+
+
+            const x1 =
+                firstRect.left +
+                firstRect.width / 2 -
+                boardRect.left;
+
+
+            const y1 =
+                firstRect.top +
+                firstRect.height / 2 -
+                boardRect.top;
+
+
+            const x2 =
+                lastRect.left +
+                lastRect.width / 2 -
+                boardRect.left;
+
+
+            const y2 =
+                lastRect.top +
+                lastRect.height / 2 -
+                boardRect.top;
+
+
+            const distance =
+                Math.sqrt(
+                    Math.pow(x2 - x1, 2) +
+                    Math.pow(y2 - y1, 2)
+                );
+
+
+            const angle =
+                Math.atan2(
+                    y2 - y1,
+                    x2 - x1
+                ) * 180 / Math.PI;
+
+
+            winLine.style.width =
+                distance + "px";
+
+
+            winLine.style.left =
+                x1 + "px";
+
+
+            winLine.style.top =
+                y1 + "px";
+
+
+            winLine.style.transform =
+                "rotate(" + angle + "deg)";
+
+
+            winLine.style.display =
+                "block";
+        }
+
+
+        restart.addEventListener("click", function () {
+
+            cells.forEach(function (cell) {
+
+                cell.textContent = "";
+
+                cell.classList.remove("x");
+
+                cell.classList.remove("o");
+
+            });
+
+
+            winLine.style.display = "none";
+
+
+            currentPlayer = "X";
+
+            gameOver = false;
+
+
+            status.textContent =
+                "Player X's Turn";
+
+        });
+
+
+        // Keep winning line correct if phone orientation changes
+        window.addEventListener("resize", function () {
+
+            if (gameOver) {
+
+                const winningPattern = checkWinner();
+
+                if (winningPattern !== null) {
+
+                    drawWinningLine(winningPattern);
+
+                }
+
+            }
+
+        });
+
+    </script>
 
 </body>
 </html>
